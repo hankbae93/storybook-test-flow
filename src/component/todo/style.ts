@@ -27,4 +27,4 @@ export const TodoContent = styled.p`
 
 export const TodoState = styled.button``;
 
-export const TodoIcon = styled.em``;
+export const TodoPin = styled.em``;

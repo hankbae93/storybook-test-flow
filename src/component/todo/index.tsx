@@ -1,14 +1,14 @@
 import React from "react";
 import {
 	TodoContent,
-	TodoIcon,
+	TodoPin,
 	TodoLeftBox,
 	TodoState,
 	TodoWrapper,
 } from "./style";
 import { TodoProps } from "./type";
 
-export const Todo = ({ todo }: TodoProps) => {
+export const Todo = ({ todo, pinned }: TodoProps) => {
 	return (
 		<TodoWrapper>
 			<TodoLeftBox>
@@ -16,7 +16,7 @@ export const Todo = ({ todo }: TodoProps) => {
 				<TodoContent>{todo.title}</TodoContent>
 			</TodoLeftBox>
 
-			<TodoIcon>📌</TodoIcon>
+			{pinned && <TodoPin>📌</TodoPin>}
 		</TodoWrapper>
 	);
 };
