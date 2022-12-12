@@ -24,7 +24,7 @@ export const Todo = ({
         <TodoInput type="checkbox" checked={todo.checked} />
 
         <TodoCheckbox onClick={onArchiveTodo}>
-          <FaCheck />
+          <FaCheck size={20} />
         </TodoCheckbox>
 
         <TodoContent onClick={onEditTitle}>{todo.title}</TodoContent>

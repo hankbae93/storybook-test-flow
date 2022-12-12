@@ -153,3 +153,13 @@ npx chromatic --project-token=[Token]
 ![TODO](./docs/todo6.png)
 
 ![TODO](./docs/todo5.png)
+
+한번 잘 작동하는지 확인해보겠습니다.
+
+```tsx
+<TodoCheckbox onClick={onArchiveTodo}>
+  <FaCheck size={20} />
+</TodoCheckbox>
+```
+
+아이콘의 사이즈를 아주 약간 수정하고 커밑하려고 합니다. 해당
