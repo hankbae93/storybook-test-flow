@@ -1,4 +1,4 @@
-# 🕹️ To do list 컴포넌트로 보는 Storybook의 UI 개발 및 Test Flow
+# 🕹️ To do list로 보는 Storybook의 UI 개발 및 Test Flow
 
 ```bash
 yarn create react-app ./ --template typescript
@@ -7,13 +7,19 @@ npx sb init
 
 <br />
 
-# 개발 프로세스
+# 🐼 Intro
+
+![TODO](./docs/example.png)
+
+Storybook에서 예시로 사용하는 Todolist App을 만들어보겠습니다.
+
+<br />
+
+# UI Spec
 
 ![TODO](./docs/todo1.png)
 
-스토리북 튜토리얼에서 예시로 드는 `Task` 컴포넌트를 직접 만들어보려고 합니다.
-
-UI의 기능 명세는 이렇습니다.
+Todo UI의 기능 명세는 이렇습니다.
 
 - `TodoData`
   - `title` : Todo의 내용
@@ -23,7 +29,13 @@ UI의 기능 명세는 이렇습니다.
 - `onTogglePinTask` : 목록 중에서 상단으로 고정할 수 있다.
 - `onArchiveTodo` : Todo를 완료시킬 수 있다.
 
+그리고 `Todolist`는 이 `Todo`의 목록의 부모 컴포넌트입니다.
+
+Todo에 들어갈 데이터 배열 상태를 여기서 관리할 예정입니다.
+
 <br />
+
+# 개발 프로세스
 
 ## 1. UI Story 파일 생성
 
@@ -35,8 +47,8 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import Todo from ".";
 
 export default {
-	title: "component/Todo",
-	component: Todo,
+  title: "component/Todo",
+  component: Todo,
 } as ComponentMeta<typeof Todo>;
 
 const Template: ComponentStory<typeof Todo> = (args) => <Todo {...args} />;

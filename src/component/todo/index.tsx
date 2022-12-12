@@ -1,22 +1,36 @@
 import React from "react";
+import { FaCheck, FaStar } from "react-icons/fa";
+
 import {
-	TodoContent,
-	TodoPin,
-	TodoLeftBox,
-	TodoState,
-	TodoWrapper,
+  TodoContent,
+  TodoPin,
+  TodoLeftBox,
+  TodoCheckbox,
+  TodoWrapper,
+  TodoInput,
 } from "./style";
 import { TodoProps } from "./type";
 
-export const Todo = ({ todo, pinned }: TodoProps) => {
-	return (
-		<TodoWrapper>
-			<TodoLeftBox>
-				<TodoState>{todo.state === "FINISH" ? "X" : "O"}</TodoState>
-				<TodoContent>{todo.title}</TodoContent>
-			</TodoLeftBox>
+export const Todo = ({
+  todo,
+  pinned,
+  onArchiveTodo,
+  onEditTitle,
+  onTogglePinTask,
+}: TodoProps) => {
+  return (
+    <TodoWrapper>
+      <TodoLeftBox>
+        <TodoInput type="checkbox" checked={todo.checked} />
 
-			{pinned && <TodoPin>📌</TodoPin>}
-		</TodoWrapper>
-	);
+        <TodoCheckbox onClick={onArchiveTodo}>
+          <FaCheck />
+        </TodoCheckbox>
+
+        <TodoContent onClick={onEditTitle}>{todo.title}</TodoContent>
+      </TodoLeftBox>
+
+      <FaStar onClick={onTogglePinTask} color={pinned ? "#FED049" : "#eee"} />
+    </TodoWrapper>
+  );
 };
