@@ -37,11 +37,10 @@ Todo에 들어갈 데이터 배열 상태를 여기서 관리할 예정입니다
 
 # 개발 프로세스
 
-## 1. UI Story 파일 생성
-
-![TODO](./docs/todo2.png)
+## 1. 디자인에 맞춰 컴포넌트 개발
 
 ```tsx
+// component/todo/todo.stories.tsx
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import Todo from ".";
@@ -57,11 +56,19 @@ export const Default = Template.bind({});
 Default.args = {};
 ```
 
-리액트 서버를 키거나 할 것 없이 스토리북 환경에서 바로 눈으로 확인하며 개발합니다.
+`Todo` 컴포넌트를 개발하기 위해 스토리 파일을 생성해줍니다.
+
+react-app에서 매번 일일이 import하여 눈으로 확인하고 State를 체크할 것이 아니라
+
+스토리북 환경에서 간편하게 UI를 개발할 수 있습니다.
+
+![TODO](./docs/todo2.png)
+
+첫 스토리를 작성했습니다! 이제 구현해야될 상태들을 작성해봅시다!
 
 <br />
 
-## 2. 컴포넌트 개발 후 테스트 케이스 작성
+## 2. 테스트 케이스 작성
 
 ![TODO](./docs/todo3.gif)
 
@@ -118,3 +125,31 @@ LongText.args = {
 ![TODO](./docs/todo4.png)
 
 예상치 못하게 스타일이 깨진 것을 PR을 올리기 전에 확인했고 리뷰어 또한 눈으로 바로 확인가능합니다!
+
+<br />
+
+## 4. 자동으로 회귀 포착하기
+
+일단 예상대로 만들어졌습니다. 하지만 앞으로도 `CSS`가 깨지지 않도록 하려면 어떻게 해야 될까요?
+
+매번 수동으로 눈으로 확인하기보다 시각적 회귀 테스트 도구를 사용하여 회귀를 자동으로 확인하는 방법을 사용해보겟습니다.
+
+스토리북에서 만든 `chromatic`을 사용해보겠습니다.
+
+https://www.chromatic.com/docs/setup
+
+![TODO](./docs/todo7.png)
+
+이제 로그인 후 프로젝트를 생성합니다. 크로마틱은 스토리북용으로 특별히 제작되었으며 따로 구성이 없습니다.
+
+아래 커맨드를 실행해 크로마틱이 각 스토리의 스냅샷을 캡처하게 해봅시다.
+
+```bash
+yarn add -D chromatic
+
+npx chromatic --project-token=[Token]
+```
+
+![TODO](./docs/todo6.png)
+
+![TODO](./docs/todo5.png)

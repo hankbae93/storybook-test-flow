@@ -67,6 +67,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@types/styled-components": "^5.1.26",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "chromatic": "^6.12.0",
     "prop-types": "^15.8.1",
     "webpack": "^5.75.0"
   }
