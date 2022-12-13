@@ -1,9 +1,13 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { TodoList } from ".";
+import Todo from "../todo/todo.stories";
 
 export default {
   title: "component/Todo List",
   component: TodoList,
+  argTypes: {
+    ...Todo.argTypes,
+  },
 } as ComponentMeta<typeof TodoList>;
 
 const Template: ComponentStory<typeof TodoList> = (args) => (
@@ -24,4 +28,29 @@ Default.args = {
     { id: "5", checked: false, title: "Fix bug in input error checked" },
     { id: "6", checked: false, title: "Draft monthly blog to customers" },
   ],
+};
+
+export const WithPinnedTodo = Template.bind({});
+WithPinnedTodo.args = {
+  list: [
+    {
+      id: "6",
+      title: "Draft monthly blog to customers",
+      checked: true,
+      pinned: true,
+    },
+    ...(Default.args.list?.slice(0, 5) ?? []),
+  ],
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  list: Default.args.list ?? [],
+  loading: true,
+};
+
+export const Empty = Template.bind({});
+Empty.args = {
+  list: [],
+  loading: false,
 };

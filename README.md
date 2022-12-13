@@ -231,10 +231,75 @@ npx chromatic --project-token=[Token]
     	복합 컴포넌트는 단순한 컴포넌트 여러 개가 모여 구성되며 애플리케이션의 상태와도 연결됩니다.
     	모듈 하나의 결함이 심각한 오류로 확대될 수 있습니다.
 
-이제 만들어진 Todo 컴포넌트들과 로직으로 구성될 `TodoList` 컴포넌트를 개발하려 합니다.
+이제 만들어진 Todo 컴포넌트들로 구성될 `TodoList` 컴포넌트를 개발하려 합니다.
 
-먼저 기능을 구현해보겠습니다.
+```tsx
+export const TodoList = ({
+  list,
+  onArchiveTodo,
+  onEditTitle,
+  onTogglePinTask,
+}: TodoListProps) => {
+  const events = {
+    onArchiveTodo,
+    onEditTitle,
+    onTogglePinTask,
+  };
 
-- 핀 버튼을 누르면 목록의 맨 위로 이동
-- 로딩 중
-- Todo가 없을 때
+  return (
+    <div>
+      {list
+        .filter((todo) => todo.pinned)
+        .map((todo) => {
+          return <Todo todo={todo} {...events} />;
+        })}
+
+      {list
+        .filter((todo) => !todo.pinned)
+        .map((todo) => {
+          return <Todo todo={todo} {...events} />;
+        })}
+    </div>
+  );
+};
+```
+
+```tsx
+import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { TodoList } from ".";
+import Todo from "../todo/todo.stories";
+
+export default {
+  title: "component/Todo List",
+  component: TodoList,
+  argTypes: {
+    ...Todo.argTypes,
+  },
+} as ComponentMeta<typeof TodoList>;
+
+const Template: ComponentStory<typeof TodoList> = (args) => (
+  <TodoList {...args} />
+);
+
+export const Default = Template.bind({});
+Default.args = {
+  list: [
+    { id: "1", checked: false, title: "Build a date picker" },
+    { id: "2", checked: false, title: "QA dropdown" },
+    {
+      id: "3",
+      checked: false,
+      title: "Write a schema for account avatar component",
+    },
+    { id: "4", checked: false, title: "Export logo" },
+    { id: "5", checked: false, title: "Fix bug in input error checked" },
+    { id: "6", checked: false, title: "Draft monthly blog to customers" },
+  ],
+};
+```
+
+같은 props의 key와 타입이라면 다른 스토리의 argType을 복사할 수 있습니다.
+
+이제 스토리에서 복합 컴포넌트의 동작이 잘 되는지 확인해봅시다.
+
+![TODO](./docs/todo10.gif)

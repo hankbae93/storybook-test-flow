@@ -7,11 +7,6 @@ export default {
   title: "component/Todo",
   component: Todo,
   argTypes: {
-    todo: {},
-    pinned: {
-      type: "boolean",
-      controls: "boolean",
-    },
     onArchiveTask: { action: "onArchiveTask" },
     onTogglePinTask: { action: "onTogglePinTask" },
     onEditTitle: { action: "onEditTitle" },
@@ -41,8 +36,10 @@ Finish.args = {
 
 export const Pinned = Template.bind({});
 Pinned.args = {
-  todo: mock,
-  pinned: true,
+  todo: {
+    ...mock,
+    pinned: true,
+  },
 };
 
 const longTextString =

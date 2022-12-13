@@ -12,7 +12,6 @@ import { TodoProps } from "./type";
 
 export const Todo = ({
   todo,
-  pinned,
   onArchiveTodo,
   onEditTitle,
   onTogglePinTask,
@@ -33,7 +32,7 @@ export const Todo = ({
 
       <FaStar
         onClick={() => onTogglePinTask(todo.id)}
-        color={pinned ? "#FED049" : "#eee"}
+        color={todo?.pinned ? "#FED049" : "#eee"}
       />
     </TodoWrapper>
   );

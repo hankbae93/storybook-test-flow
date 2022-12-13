@@ -4,11 +4,16 @@ export const TodoWrapper = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   background: #fff;
   padding: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-sizing: border-box;
+
+  :last-child {
+    border: none;
+  }
 
   :hover {
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
