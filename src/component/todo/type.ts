@@ -1,5 +1,5 @@
 export interface TodoData {
-  id: number;
+  id: number | string;
   title: string;
   checked: boolean;
 }
@@ -10,7 +10,7 @@ export interface TodoProps {
    */
   todo: TodoData;
   pinned?: boolean;
-  onEditTitle?: () => void;
-  onTogglePinTask?: () => void;
-  onArchiveTodo?: () => void;
+  onEditTitle: (title: string) => void;
+  onTogglePinTask: (id: string | number) => void;
+  onArchiveTodo: (id: string | number) => void;
 }

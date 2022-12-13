@@ -1,10 +1,11 @@
 export const parameters = {
-	actions: { argTypesRegex: "^on[A-Z].*" },
-	controls: {
-		expanded: true,
-		matchers: {
-			color: /(background|color)$/i,
-			date: /Date$/,
-		},
-	},
+  actions: { argTypesRegex: "^on.*" },
+
+  controls: {
+    expanded: true,
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
+    },
+  },
 };

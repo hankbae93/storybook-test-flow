@@ -3,7 +3,6 @@ import { FaCheck, FaStar } from "react-icons/fa";
 
 import {
   TodoContent,
-  TodoPin,
   TodoLeftBox,
   TodoCheckbox,
   TodoWrapper,
@@ -23,14 +22,19 @@ export const Todo = ({
       <TodoLeftBox>
         <TodoInput type="checkbox" checked={todo.checked} />
 
-        <TodoCheckbox onClick={onArchiveTodo}>
+        <TodoCheckbox onClick={() => onArchiveTodo(todo.id)}>
           <FaCheck size={20} />
         </TodoCheckbox>
 
-        <TodoContent onClick={onEditTitle}>{todo.title}</TodoContent>
+        <TodoContent onClick={() => onEditTitle(todo.title)}>
+          {todo.title}
+        </TodoContent>
       </TodoLeftBox>
 
-      <FaStar onClick={onTogglePinTask} color={pinned ? "#FED049" : "#eee"} />
+      <FaStar
+        onClick={() => onTogglePinTask(todo.id)}
+        color={pinned ? "#FED049" : "#eee"}
+      />
     </TodoWrapper>
   );
 };

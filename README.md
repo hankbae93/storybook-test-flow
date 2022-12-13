@@ -128,7 +128,54 @@ LongText.args = {
 
 <br />
 
-## 4. 자동으로 회귀 포착하기
+## 4. 동작 테스트
+
+`Todo` 컴포넌트에서 클릭 이벤트를 활용할 부분은 총 3개입니다.
+
+- 체크박스를 클릭했을 때
+- 텍스트를 클릭했을 때
+- 즐겨찾기(별) 버튼을 클릭했을 때
+
+```tsx
+const Todo = ({
+  todo,
+  pinned,
+  onArchiveTodo,
+  onEditTitle,
+  onTogglePinTask,
+}: TodoProps) => {
+  return (
+    <TodoWrapper>
+      <TodoLeftBox>
+        <TodoInput type="checkbox" checked={todo.checked} />
+
+        <TodoCheckbox onClick={() => onArchiveTodo(todo.id)}>
+          <FaCheck size={20} />
+        </TodoCheckbox>
+
+        <TodoContent onClick={() => onEditTitle(todo.title)}>
+          {todo.title}
+        </TodoContent>
+      </TodoLeftBox>
+
+      <FaStar
+        onClick={() => onTogglePinTask(todo.id)}
+        color={pinned ? "#FED049" : "#eee"}
+      />
+    </TodoWrapper>
+  );
+};
+```
+
+함수들은 위 부모 컴포넌트에서 주입해줄 것이기 때문에 여기서는 인자가 맞게 넘어갔는지
+
+이벤트가 원하는 타겟에서 이뤄졌는지 확인할 예정입니다.
+
+![TODO](./docs/todo9.gif)
+
+이제 Storybook의 `action` addon을 활용해보겠습니다. 함수들이 알맞게 호출되었고 인자 또한 확인되었습니다.
+
+## 5. 자동으로 회귀 포착하기
 
 일단 예상대로 만들어졌습니다. 하지만 앞으로도 `CSS`가 깨지지 않도록 하려면 어떻게 해야 될까요?
 
@@ -177,3 +224,17 @@ npx chromatic --project-token=[Token]
 ![TODO](./docs/todo8.gif)
 
 저희가 수정한 파일이 비주얼적으로 어떻게 바뀌었으며 코드 또한 같이 올라옵니다.
+
+## 6. Composition Test
+
+    	컴포넌트 하나의 버그가 주변의 다른 부분에도 전부 영향을 미칩니다.
+    	복합 컴포넌트는 단순한 컴포넌트 여러 개가 모여 구성되며 애플리케이션의 상태와도 연결됩니다.
+    	모듈 하나의 결함이 심각한 오류로 확대될 수 있습니다.
+
+이제 만들어진 Todo 컴포넌트들과 로직으로 구성될 `TodoList` 컴포넌트를 개발하려 합니다.
+
+먼저 기능을 구현해보겠습니다.
+
+- 핀 버튼을 누르면 목록의 맨 위로 이동
+- 로딩 중
+- Todo가 없을 때
