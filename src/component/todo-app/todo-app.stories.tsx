@@ -16,8 +16,10 @@ export const TodoDefault = Template.bind({});
 TodoDefault.parameters = {
   msw: {
     handlers: [
-      rest.get('/tasks', (req, res, ctx) => {
-        return res(ctx.json(TodoListDefault.args));
+      rest.get('/todo', (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json(TodoListDefault.args));
       }),
     ],
   },
@@ -27,8 +29,10 @@ export const Error = Template.bind({});
 Error.parameters = {
   msw: {
     handlers: [
-      rest.get('/tasks', (req, res, ctx) => {
-        return  res(ctx.json([]));
+      rest.get('/todo', (req, res, ctx) => {
+        return  res(
+            ctx.status(200),
+            ctx.json([]));
       }),
     ],
   },

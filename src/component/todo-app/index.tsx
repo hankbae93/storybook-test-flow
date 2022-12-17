@@ -3,7 +3,7 @@ import {TodoList} from '../\btodo-list';
 import {TodoData, TodoProps} from '../todo/type';
 import axios, {AxiosRequestConfig} from "axios";
 
-const fetchTodo = async (options: AxiosRequestConfig) => axios.get(`/task`,options)
+const fetchTodo = async (options: AxiosRequestConfig) => axios.get(`/todo`,options)
 
 const TodoApp = () => {
   const [data, setData] = useState<TodoData[]>([]);
@@ -41,7 +41,8 @@ const TodoApp = () => {
 
      fetchTodo({signal})
         .then(({ data }) => {
-          setData(data)
+          console.log(data)
+          setData(data.list)
         })
         .catch((error) => {
           if (!abortController.signal.aborted) {

@@ -339,6 +339,73 @@ export const parameters = {
 export const decorators = [Story => <Story />, mswDecorator];
 ```
 
+```tsx
+// todo-app.stories.tsx
+import {rest} from "msw";
+...
+export const TodoDefault = Template.bind({});
+TodoDefault.parameters = {
+  msw: {
+    handlers: [
+      rest.get('/todo', (req, res, ctx) => {
+        return res(ctx.json(TodoListDefault.args));
+      }),
+    ],
+  },
+};
+```
+
+해당 컴포넌트에서 일어나는 fetching을 `msw`가 인터셉트하여 모의 데이터를 대신 제공해줍니다.
+
+![TODO](./docs/todo11.png)
+
+Mocking된 데이터가 들어온 것을 네트워크 탭과 콘솔에서 둘 다 확인할 수 있습니다!
+
+## 8. 컴포넌트 인터렉션 테스트하기
+
+    UI는 표면상으로 사용자들이 눈으로 보고 상호작용합니다. 또한 그 안을 보면 정보와 이벤트의 흐름이 잘 동작되도록 연결되어 있습니다.
+
+`TodoApp`에서 사용자는 일정을 고정시키기 위해 별 아이콘을 클릭할 수 있습니다. 또는 checkbox를 클릭해 업무를 수행했다고 완료할 수도 있습니다.
+
+사용자가 버튼을 눌러 상호작용을 하면 이러한 상태의 변화와 렌더링된 UI가 업데이트되는 것이 하나의 주기입니다. 
+
+우리는 이러한 모든 상태에서 컴포넌트가 올바르게 보이고, 해당하는 인터렉션에 반응하는지도 보장해야합니다.
+
+### Test Runner
+
+상호작용 테스트는 모의 데이터를 제공하여 테스트 시나리오를 설정하고 Testing Library를 사용하여 인터렉션을 시뮬레이션하고 결과로 렌더링된 DOM을 확인하는 방식으로 진행됩니다.
+
+```bash
+yarn add -D @storybook/testing-library @storybook/jest @storybook/addon-interactions @storybook/test-runner
+```
+
+설치 후 스토리북 `main.js`도 수정해줍니다.
+
+```js
+// .storybook/main.js
+module.exports = {
+    ...,
+    addons: [
+      ...
+              '@storybook/addon-interactions',
+    ],
+    features: {
+      interactionsDebugger: true,
+    },
+    ...
+}
+```
+
+package.json의 스크립트에도 스토리북의 테스트 실행 커맨드를 추가해주십시다.
+
+```json
+...
+"script": {
+  "test-storybook": "test-storybook"
+}
+...
+```
+
 
 
 
