@@ -303,3 +303,56 @@ Default.args = {
 이제 스토리에서 복합 컴포넌트의 동작이 잘 되는지 확인해봅시다.
 
 ![TODO](./docs/todo10.gif)
+
+
+## 7. 복합 컴포넌트 상태 Mocking
+
+`TodoApp` 컴포넌트에서 fetch한 todo의 데이터리스트를 상태로 관리하고자 합니다. 
+
+API 요청, 상태, 컨텍스트, 프로바이더 등 컴포넌트가 의존하는 모든 상황을 mocking할 수 있습니다.
+
+여기서는 `Mock Service Worker` 애드온을 통해 네트워크 레벨에서 요청을 가로채 Mocking Response를 반환하게 해보겠습니다.
+
+```bash
+yarn add -D msw msw-storybook-addon
+npx msw init public/ 
+```
+
+public 폴더에서 `mockServiceWorker.js` 파일이 생성되었으면 스토리북 환경에도 추가 세팅을 해줘야 합니다.
+
+```js
+// .storybook/preview.js
+import { initialize, mswDecorator } from 'msw-storybook-addon';
+
+initialize();
+
+export const parameters = {
+  actions: { argTypesRegex: '^on[A-Z].*' },
+  controls: {
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
+    },
+  },
+};
+
+export const decorators = [Story => <Story />, mswDecorator];
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
