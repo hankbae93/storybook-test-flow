@@ -406,18 +406,68 @@ package.json의 스크립트에도 스토리북의 테스트 실행 커맨드를
 ...
 ```
 
+### testing-library / jest
+
+테스팅 라이브러리 는 클릭, 드래그, 탭, 타이핑 등 사용자 상호 작용을 시뮬레이션하기 위한 편리한 API를 제공합니다. 
+
+반면에 Jest는 선언 유틸리티를 제공합니다.
 
 
 
+### 테스트 코드
+
+```tsx
+export const TodoAppPinTask = Template.bind({})
+TodoAppPinTask.parameters = TodoDefault.parameters;
+TodoAppPinTask.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const getTask = (name: string) => canvas.findByRole('listitem', {name})
+
+  // // Find the todo to pin
+  const itemToPin = await getTask('Build a date picker')
 
 
+  // Find the pin button
+  const pinButton = await findByRole(itemToPin,'button' , { name: 'pin' });
+
+  // Click the pin button
+  await userEvent.click(pinButton);
+
+  // Check that the pin button is now an unpin button
+  const unpinButton = within(itemToPin).getByRole('button' , { name: 'unpin' });
+  await expect(unpinButton).toBeInTheDocument();
+}
+```
+
+storybook의 `play` 함수는  스토리의 최상위 컨테이너인 캔버스 요소를 받습니다. 
+
+이 요소 내에서만 쿼리의 범위를 지정하여 DOM 노드를 찾을 수 있습니다. 
+
+또한 `interaction` addon에서 디버깅이 가능하며 캔버스에 실제로 그려진 DOM 또한
+
+테스트의 step별로 확인 가능합니다.
 
 
+**결과물**
+
+![TODO](./docs/todo12.gif)
 
 
+### 테스트 코드 프로세스 자동화
 
+스토리북은 해당 스토리를 볼 떄만 인터렉션 테스트를 실행합니다. 
 
+변경할 때마다 스토리북을 검토하는 것은 힘들기 때문에 `Playwright`에서 제공되는 유틸리티로 
 
+한번에 확인해봅시다.
+
+```bash
+yarn test-storybook --watch
+```
+
+![TODO](./docs/todo13.png)
+
+에러가 난 스토리로 링크까지 제공합니다! 
 
 
 

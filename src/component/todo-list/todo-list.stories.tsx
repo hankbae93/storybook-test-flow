@@ -1,6 +1,7 @@
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { TodoList } from ".";
+import {ComponentMeta, ComponentStory} from "@storybook/react";
+import {TodoList} from ".";
 import Todo from "../todo/todo.stories";
+import {mockTodoArray} from "../todo-app/mockup";
 
 export default {
   title: "component/Todo List",
@@ -16,18 +17,7 @@ const Template: ComponentStory<typeof TodoList> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  list: [
-    { id: "1", checked: false, title: "Build a date picker" },
-    { id: "2", checked: false, title: "QA dropdown" },
-    {
-      id: "3",
-      checked: false,
-      title: "Write a schema for account avatar component",
-    },
-    { id: "4", checked: false, title: "Export logo" },
-    { id: "5", checked: false, title: "Fix bug in input error checked" },
-    { id: "6", checked: false, title: "Draft monthly blog to customers" },
-  ],
+  list: mockTodoArray,
 };
 
 export const WithPinnedTodo = Template.bind({});

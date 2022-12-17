@@ -1,15 +1,9 @@
-import { Todo } from "../todo";
-import { TodoListProps } from "./type";
-import styled, { keyframes } from "styled-components";
-import { FaTruckLoading } from "react-icons/fa";
+import { Todo } from '../todo';
+import { TodoListProps } from './type';
+import styled, { keyframes } from 'styled-components';
+import { FaTruckLoading } from 'react-icons/fa';
 
-export const TodoList = ({
-  list,
-  loading,
-  onArchiveTodo,
-  onEditTitle,
-  onTogglePinTask,
-}: TodoListProps) => {
+export const TodoList = ({ list, loading, onArchiveTodo, onEditTitle, onTogglePinTask }: TodoListProps) => {
   const events = {
     onArchiveTodo,
     onEditTitle,
@@ -30,20 +24,14 @@ export const TodoList = ({
       </TodolistWrapper>
     );
 
+  const sortByPinnedList = [...list.filter(todo => todo.pinned), ...list.filter(todo => !todo.pinned)];
+
   return (
     <TodolistWrapper>
-      {list.length === 0 && <h3>EMPTY</h3>}
-      {list
-        .filter((todo) => todo.pinned)
-        .map((todo) => {
-          return <Todo todo={todo} {...events} />;
-        })}
-
-      {list
-        .filter((todo) => !todo.pinned)
-        .map((todo) => {
-          return <Todo todo={todo} {...events} />;
-        })}
+      {sortByPinnedList.length === 0 && <h3>EMPTY</h3>}
+      {sortByPinnedList.map(todo => {
+        return <Todo todo={todo} {...events} />;
+      })}
     </TodolistWrapper>
   );
 };
@@ -87,7 +75,10 @@ export const LoadingWrapper = styled.div`
   gap: 4px;
 `;
 
-export const Dot = styled.div<{ delay: string }>`
+export const Dot =
+  styled.div <
+  { delay: string } >
+  `
   background-color: black;
   border-radius: 50%;
   width: 0.75rem;
@@ -95,5 +86,5 @@ export const Dot = styled.div<{ delay: string }>`
   margin: 0 0.25rem;
   /*Animation*/
   animation: ${BounceAnimation} 0.5s linear infinite;
-  animation-delay: ${(props) => props.delay};
+  animation-delay: ${props => props.delay};
 `;

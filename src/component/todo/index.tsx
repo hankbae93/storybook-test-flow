@@ -1,23 +1,12 @@
-import React from "react";
-import { FaCheck, FaStar } from "react-icons/fa";
+import React from 'react';
+import { FaCheck, FaStar } from 'react-icons/fa';
 
-import {
-  TodoContent,
-  TodoLeftBox,
-  TodoCheckbox,
-  TodoWrapper,
-  TodoInput,
-} from "./style";
-import { TodoProps } from "./type";
+import { TodoCheckbox, TodoContent, TodoInput, TodoLeftBox, TodoWrapper } from './style';
+import { TodoProps } from './type';
 
-export const Todo = ({
-  todo,
-  onArchiveTodo,
-  onEditTitle,
-  onTogglePinTask,
-}: TodoProps) => {
+export const Todo = ({ todo, onArchiveTodo, onEditTitle, onTogglePinTask }: TodoProps) => {
   return (
-    <TodoWrapper>
+    <TodoWrapper aria-label={todo.title}>
       <TodoLeftBox>
         <TodoInput type="checkbox" checked={todo.checked} />
 
@@ -25,15 +14,12 @@ export const Todo = ({
           <FaCheck size={20} />
         </TodoCheckbox>
 
-        <TodoContent onClick={() => onEditTitle(todo.title)}>
-          {todo.title}
-        </TodoContent>
+        <TodoContent onClick={() => onEditTitle(todo.title)}>{todo.title}</TodoContent>
       </TodoLeftBox>
 
-      <FaStar
-        onClick={() => onTogglePinTask(todo.id)}
-        color={todo?.pinned ? "#FED049" : "#eee"}
-      />
+      <div role="button" onClick={() => onTogglePinTask(todo.id)} aria-label={todo?.pinned ? 'pin' : 'unpin'}>
+        <FaStar color={todo?.pinned ? '#FED049' : '#eee'} />
+      </div>
     </TodoWrapper>
   );
 };
