@@ -57,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^6.5.14",
     "@storybook/addon-actions": "^6.5.14",
     "@storybook/addon-essentials": "^6.5.14",
     "@storybook/addon-interactions": "^6.5.14",
@@ -70,6 +71,7 @@
     "@storybook/test-runner": "^0.9.1",
     "@storybook/testing-library": "^0.0.13",
     "@types/styled-components": "^5.1.26",
+    "axe-playwright": "^1.1.11",
     "babel-plugin-named-exports-order": "^0.0.2",
     "chromatic": "^6.12.0",
     "msw": "^0.49.2",

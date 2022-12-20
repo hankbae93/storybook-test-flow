@@ -10,6 +10,16 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  a11y: {
+    config: {
+      rules: [
+        {
+          id: 'color-contrast',
+          enabled: false,
+        },
+      ],
+    },
+  },
 };
 
 export const decorators = [Story => <Story />, mswDecorator];

@@ -5,6 +5,7 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions', // Addon has to be registered
     '@storybook/preset-create-react-app',
+    '@storybook/addon-a11y',
   ],
   features: {
     interactionsDebugger: true, // enable playback controls

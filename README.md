@@ -470,6 +470,100 @@ yarn test-storybook --watch
 에러가 난 스토리로 링크까지 제공합니다! 
 
 
+## 9. 접근성 테스트하기
+
+시각, 청각, 이동성, 인지, 발화 그리고 신경학적인 장애들로 인해 다음과 같은 앱 요구사항이 발생합니다.
+
+- ⌨ 키보드 네비게이션
+- 🗣 스크린 리더기 지원
+- 👆 터치 친화성
+- 🎨 충분히 높은 색 대비
+- ⚡️ 모션 감소
+- 🔍 확대
+
+과거에는 브라우저, 장치 및 스크린 리더기의 조합에서 모든 컴포넌트를 검사했습니다.
+
+그러나 실제 개발에서는 수준급의 접근성 지식을 가진 개발자와 그만한 공수를 들일 시간이 충분하지 않기 때문에 
+
+이를 위해 자동화 QA 도구들이 나왔습니다.
+
+여기서 써볼 `Axe`의 경우에는 WCAG 이슈의 57%를 자동으로 발견한다고 알려져 있습니다.
+
+대부분의 기존 테스트 환경과 통합되므로 `jest-axe Intergation`, `Storybook` 애드온 등을 사용하여 검사합니다.
+
+### code
+
+```bash
+yarn add -D @storybook/addon-a11y
+```
+
+설치 후 `storybook/main.js`의 애드온 항목에도 추가해줍시다.
+
+![TODO](./docs/todo14.png)
+
+이제 스토리북의 탭에서 접근성 애드온이 나오는 걸 확인할 수 있습니다.
+
+
+```bash
+yarn add -D axe-playwright
+```
+
+이제 테스트 러너를 이용하여 회귀로 접근성이 깨지는지 실시간으로 검사하며 개발해봅시다.
+
+```js
+// .storybook/test-runner.js
+const { injectAxe, checkA11y } = require('axe-playwright');
+
+module.exports = {
+ async preRender(page, context) {
+   await injectAxe(page);
+ },
+ async postRender(page, context) {
+   await checkA11y(page, '#root', {
+     detailedReport: true,
+     detailedReportOptions: {
+       html: true,
+     },
+   })
+ },
+};
+```
+
+새로운 파일을 생성하여 스토리북이 활용할 테스트러너 코드를 작성해주십다.
+
+```bash
+yarn test-storybook --watch
+
+Watch Usage
+ › Press a to run all tests.
+ › Press f to run only failed tests.
+ › Press q to quit watch mode.
+ › Press p to filter by a filename regex pattern.
+ › Press t to filter by a test name regex pattern.
+ › Press Enter to trigger a test run.
+No tests found related to files changed since last commit.
+Press `a` to run all tests, or run Jest with `--watchAll`.
+```
+
+a를 눌러 한번 점검해보면 저도 미처 열어보지 못한 스토리들의 접근성 이슈를 확인할 수 있습니다.
+
+![TODO](./docs/todo15.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
